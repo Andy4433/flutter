@@ -1,3 +1,4 @@
+import 'package:chuva_dart/screens/calendario.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
@@ -6,7 +7,7 @@ void main() {
 
   group('Calendar page', () {
     testWidgets('Valida estado inicial', (WidgetTester tester) async {
-      await tester.pumpWidget(const ChuvaDart());
+      await tester.pumpWidget(const Caledario());
       expect(find.text('Programação'), findsOneWidget);
       expect(find.text('Nov'), findsOneWidget);
       expect(find.text('2023'), findsOneWidget);
@@ -16,12 +17,12 @@ void main() {
     });
 
     testWidgets('Seleciona dia 28 e verifica que a mesa redonda foi renderizada', (WidgetTester tester) async {
-      await tester.pumpWidget(const ChuvaDart());
+      await tester.pumpWidget(const Caledario());
 
       // Check that 'Palestra de 09:30 até 10:00' is not on the screen before tapping '28'.
       expect(find.text('Palestra de 09:30 até 10:00'), findsNothing);
       await expectLater(
-        find.byType(Calendar),
+        find.byType(Caledario),
         matchesGoldenFile('../screenshots/CalendarPage-Day26.png'),
       );
 
@@ -30,7 +31,7 @@ void main() {
       await tester.pumpAndSettle();
 
       await expectLater(
-        find.byType(Calendar),
+        find.byType(Caledario),
         matchesGoldenFile('../screenshots/CalendarPage-Day28.png'),
       );
 

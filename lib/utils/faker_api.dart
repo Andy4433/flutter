@@ -7,7 +7,7 @@ class FakerApi {
   ///Função para obter os horários disponíveis com base nos paramêtros obrigatórios.
   static Future<List<Data>> getData() async {
     String url ='';
-      url = 'https://fakerapi.it/api/v1/persons?_quantity=100&_gender=male&_birthday_start=2021-11-25&_birthday_end=2021-12-31';
+      url = 'https://raw.githubusercontent.com/chuva-inc/exercicios-2023/master/dart/assets/activities.json';
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {

@@ -5,35 +5,49 @@ import 'package:chuva_dart/utils/faker_api.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-var now = DateTime.now();
-var firstDay = DateTime(now.year, now.month -3, now.day);
-var lastDay = DateTime(now.year, now.month +3, now.day);
-CalendarFormat formar = CalendarFormat.twoWeeks;
-
-String locale= 'pt-Br';  
-
 bool load = false;
 List<AppEvent> events = [];
 
-var focusedDay = DateTime.now();
-var selectedDay = DateTime.now();
- LinkedHashMap<DateTime, List<AppEvent>>? _groupedEvents;
+var now = DateTime.now();
+var firstDay = DateTime(now.year, now.month -3, now.day);
+var lastDay = DateTime(now.year, now.month +3, now.day);
 
-@override
 
 class Caledario extends StatefulWidget {
-  const Caledario({super.key});
+  const Caledario({Key? key}) : super(key: key );
 
-  @override
-  State<Caledario> createState() => _MyWidgetState();
+  
+ _MyWidgetState createState() => _MyWidgetState();
 }
 
-class _MyWidgetState extends State<Caledario> {
+class _MyWidgetState extends State<Caledario> with TickerProviderStateMixin{
+  _MyWidgetState();
+  
+  CalendarFormat formar = CalendarFormat.twoWeeks;
+  LinkedHashMap<DateTime, List<AppEvent>>? _groupedEvents;
+  var focusedDay = DateTime.now();
+  var selectedDay = DateTime.now();
   
   @override
-  void initState(){
+    @override
+  void initState() {
+    super.initState();
     addSchedules();
   }
+
+   int getHashCode(DateTime key) {
+    return key.day * 1000000 + key.month * 10000 + key.year;
+  }
+
+  _groupEvents(List<AppEvent> events){
+    _groupedEvents = LinkedHashMap(equals: isSameDay, hashCode: getHashCode);
+    for (var event in events){
+      DateTime date = DateTime.utc(event.date!.year, event.date!. month, event.date!.day, 25);
+    if(_groupedEvents![date] == null) _groupedEvents![date] = [];
+      _groupedEvents![date]!.add(event);
+      }
+  }
+
 
   List<dynamic>_getEventsForDay(DateTime date){
     return _groupedEvents?[date]??[];
@@ -55,18 +69,7 @@ class _MyWidgetState extends State<Caledario> {
     _groupEvents(events);
   }
 
-int getHashCode(DateTime key){
-  return key.day * 1000000 + key.month * 10002 + key.year;
-}
 
-_groupEvents(List<AppEvent> events){
-  _groupedEvents = LinkedHashMap(equals: isSameDay, hashCode: getHashCode);
-  for (var event in events){
-    DateTime date = DateTime.utc(event.date!.year, event.date!. month, event.date!.day, 25);
-    if(_groupedEvents![date] == null) _groupedEvents![date] = [];
-    _groupedEvents![date]!.add(event);
-  }
-}
 
   CalendarFormat format = CalendarFormat.twoWeeks;
 
@@ -89,9 +92,9 @@ _groupEvents(List<AppEvent> events){
             });
           },
                    
-          focusedDay: now,
-          firstDay: firstDay,
-          lastDay:  lastDay,
+          firstDay: DateTime.utc(2010, 10, 16),
+          lastDay: DateTime.utc(2030, 3, 14),
+          focusedDay: DateTime.now(),
           calendarFormat: format,
           startingDayOfWeek: StartingDayOfWeek.monday, 
           availableCalendarFormats: const{
@@ -217,90 +220,3 @@ _groupEvents(List<AppEvent> events){
 }
 
 
-// import 'package:chuva_dart/screens/screens.dart';
-// import 'package:flutter/material.dart';
-
-
-// void main() {
-//   runApp(const ChuvaDart());
-// }
-
-
-// class Calendar extends StatefulWidget {
-//   const Calendar({super.key});
-
-//   @override
-//   State<Calendar> createState() => _CalendarState();
-// }
-
-// class _CalendarState extends State<Calendar> {
-//   DateTime _currentDate = DateTime(2023, 11, 26);
-//   bool _clicked = false;
-
-//   void _changeDate(DateTime newDate) {
-//     setState(() {
-//       _currentDate = newDate;
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-//         title: const Text('Chuva ❤️ Flutter'),
-//       ),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             const Text(
-//               'Programação',
-//             ),
-//             const Text(
-//               'Nov',
-//             ),
-//             const Text(
-//               '2023',
-//             ),
-//             OutlinedButton(
-//               onPressed: () {
-//                 _changeDate(DateTime(2023, 11, 26));
-//               },
-//               child: Text(
-//                 '26',
-//                 style: Theme.of(context).textTheme.headlineMedium,
-//               ),
-//             ),
-//             OutlinedButton(
-//               onPressed: () {
-//                 _changeDate(DateTime(2023, 11, 28));
-//               },
-//               child: Text(
-//                 '28',
-//                 style: Theme.of(context).textTheme.headlineMedium,
-//               ),
-//             ),
-//             if (_currentDate.day == 26)
-//               OutlinedButton(
-//                   onPressed: () {
-//                     setState(() {
-//                       _clicked = true;
-//                     });
-//                   },
-//                   child: const Text('Mesa redonda de 07:00 até 08:00')),
-//             if (_currentDate.day == 28)
-//               OutlinedButton(
-//                   onPressed: () {
-//                     setState(() {
-//                       _clicked = true;
-//                     });
-//                   },
-//                   child: const Text('Palestra de 09:30 até 10:00')),
-//             if (_currentDate.day == 26 && _clicked) const Activity(),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

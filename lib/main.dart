@@ -1,31 +1,36 @@
 import 'package:chuva_dart/screens/calendario.dart';
 import 'package:flutter/material.dart';
-
-
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
-  runApp(const Myapp());
+  initializeDateFormatting().then((_) => 
+  runApp(const MyApp()));
 }
 
-class Myapp extends StatelessWidget {
-  const Myapp({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue
+      theme: ThemeData(      
+        primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
-          appBar: AppBar(
-            title: const Text("'Chuva ❤️ Flutter'"),
-            centerTitle: true,
-            backgroundColor: Colors.blue,
-          ),
-          body: const Caledario(),
-          backgroundColor: Colors.white,
-        )
+      home: 
+       Scaffold(
+      appBar: AppBar(
+        title: const Text('Chuva'),
+        centerTitle: true,
+        backgroundColor: Colors.blueGrey,
+      ),
+      body:  Caledario(),
+      backgroundColor: Colors.white,
+    )
+
+
     );
   }
 }
+
