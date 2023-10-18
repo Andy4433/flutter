@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       home: 
        Scaffold(
       appBar: AppBar(
-        title: const Text('Chuva'),
+        title: const Text('Chuva ❤️ Flutter'),
         centerTitle: true,
         backgroundColor: Colors.blueGrey,
       ),

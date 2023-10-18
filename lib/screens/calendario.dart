@@ -33,7 +33,9 @@ class _MyWidgetState extends State<Caledario> with TickerProviderStateMixin{
   void initState() {
     super.initState();
     addSchedules();
+    
   }
+
 
    int getHashCode(DateTime key) {
     return key.day * 1000000 + key.month * 10000 + key.year;
@@ -215,6 +217,7 @@ class _MyWidgetState extends State<Caledario> with TickerProviderStateMixin{
           ))
 
       ],
+      
     );
   }
 }
